@@ -4,40 +4,11 @@ function search_triplets(arr) {
 	// TODO: Write your code here
 	// given unsorted array, find all triplets that add up to zero, return array with all triplets that sum up to zero
 	// sort the array first
-	// start from both ends of the array
-	//
-	triplets = [];
 
-	let sumTarget = 0;
-
-	if (arr.length < 3) {
-		return triplets;
-	}
-
+	let triplets = [];
 	arr.sort((a, b) => a - b);
-	for (let i = 0; i < arr.length - 2; i++) {
-		if (arr[i] === arr[i - 1]) continue;
-		if (arr[i] > sumTarget) {
-			//if the first target is already greater than zero and since it's increasing, there's no way to add up to zero
-			return triplets;
-		}
-		let leftPointer = i + 1;
-		let rightPointer = arr.length - 1;
-
-		while (leftPointer < rightPointer) {
-			if (arr[leftPointer] + arr[rightPointer] + arr[i] === sumTarget) {
-				triplets.push([ arr[leftPointer], arr[rightPointer], arr[i] ]);
-				while (arr[leftPointer] === arr[leftPointer + 1]) leftPointer++;
-				while (arr[rightPointer] === arr[rightPointer - 1]) rightPointer--;
-				leftPointer++;
-				rightPointer--;
-			} else if (arr[leftPointer] + arr[rightPointer] + arr[i] < sumTarget) {
-				leftPointer++;
-			} else {
-				rightPointer--;
-			}
-		}
-	}
+	let left = 0;
+	let right = arr.length - 1;
 
 	return triplets;
 }
