@@ -4,7 +4,27 @@ const { strictEqual } = require('assert');
 	APPLE
 	ONE
 */
-function camelize(text) {}
+function camelize(s) {
+	var n = s.length;
+
+	var str = '';
+	for (var i = 0; i < n; i++) {
+		// check for spaces in the sentence
+		if (s[i] == ' ') {
+			// conversion into upper case
+			str += s[i + 1].toUpperCase();
+			i++;
+		} else {
+			// If not space, copy character
+			str += s[i];
+		}
+	}
+
+	// return string to main
+	return str;
+}
+
+console.log(camelize('hello world'));
 
 //console.log(camelize('AppleOne'));
 
