@@ -1,38 +1,60 @@
-function test(string, substring) {
-	var letters = [ ...string ];
-	return [ ...substring ].every((x) => {
-		var index = letters.indexOf(x);
-		if (~index) {
-			letters.splice(index, 1);
-			console.log(letters);
-			return true;
-		}
-	});
-}
-
-console.log(test('hihi', 'hi'));
-
-function stringContainString(arr) {
-	return arr[1].split('').every(function(letter) {
-		return arr[0].indexOf(letter) != -1;
-	});
-}
-//console.log(stringContainString([ 'zyxwvutsrqponmlkjihgfedcba', 'qrstu' ]));
-
-//console.log(test('onetwo', 'one'));
+const { strictEqual } = require('assert');
 
 /* 
 	APPLE
 	ONE
 */
-function camelize(text) {
-	return text.replace(/^([A-Z])|[\s-_]+(\w)/g, function(match, p1, p2, offset) {
-		if (p2) return p2.toUpperCase();
-		return p1.toLowerCase();
-	});
-}
+function camelize(text) {}
 
 //console.log(camelize('AppleOne'));
+
+/* 
+	self describing number
+	2020 
+	2 zeros
+	0 ones
+	2 twos
+	0 threes
+*/
+/* 
+	the sum of digits can't be greater than the length of the number
+*/
+function selfDescribing(n) {
+	let freq = {};
+	let sumOfDigits = 0;
+	let lengthOfNumber = n.toString().length;
+
+	let num = n;
+	while (num > 0) {
+		sumOfDigits += num % 10;
+		num = Math.floor(num / 10);
+	}
+
+	if (lengthOfNumber > 9 || lengthOfNumber < 4 || sumOfDigits !== lengthOfNumber) {
+		return false;
+	}
+
+	for (const num of n) {
+		if (!freq[num]) {
+			freq[num] = 1;
+		} else {
+			freq[num]++;
+		}
+	}
+
+	for (let i = 0; i < lengthOfNumber; i++) {
+		if (freq[i] === parseInt(n.charAt(i)) || (!freq[i] && n.charAt(i) === '0')) {
+			continue;
+		} else {
+			return false;
+		}
+	}
+	return true;
+
+	//console.log(freq);
+}
+
+console.log(selfDescribing('21200'));
 
 /* 
  																	z, w, u ,x ,g
@@ -245,9 +267,8 @@ function jumbledNumbers(s) {
 				delete freq['e'];
 			}
 		}
-
 		console.log(arr.sort((a, b) => a - b).join(''));
 	}
 }
 
-jumbledNumbers('reuonnoinfe');
+//jumbledNumbers('reuonnseoveninfe');
